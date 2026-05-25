@@ -2017,3 +2017,118 @@ body[data-theme="night"] .share-options button.selected:not(:hover) {
   from { opacity: .94; }
   to { opacity: 1; }
 }
+
+@media (max-width: 820px) {
+  body:not([data-theme="night"]) .mobile-drawer {
+    color: #1f2b22;
+  }
+
+  body:not([data-theme="night"]) .drawer-head {
+    color: #17251d;
+  }
+
+  body:not([data-theme="night"]) .drawer-head button {
+    color: rgba(31,43,34,.78);
+  }
+
+  body:not([data-theme="night"]) .drawer-progress span,
+  body:not([data-theme="night"]) .drawer-tip {
+    color: rgba(31,43,34,.72);
+  }
+
+  body:not([data-theme="night"]) .drawer-progress strong {
+    color: #18251c;
+  }
+
+  body:not([data-theme="night"]) .drawer-steps button {
+    color: rgba(31,43,34,.78);
+  }
+
+  body:not([data-theme="night"]) .drawer-steps b strong {
+    color: #26362d;
+  }
+
+  body:not([data-theme="night"]) .drawer-steps small {
+    color: rgba(31,43,34,.7);
+    font-weight: 780;
+  }
+
+  body:not([data-theme="night"]) .drawer-steps button.active,
+  body:not([data-theme="night"]) .drawer-steps button.done,
+  body:not([data-theme="night"]) .drawer-steps button.success {
+    color: #1f2b22;
+  }
+
+  body:not([data-theme="night"]) .drawer-steps button.active b strong,
+  body:not([data-theme="night"]) .drawer-steps button.done b strong,
+  body:not([data-theme="night"]) .drawer-steps button.success b strong {
+    color: #17251d;
+  }
+
+  body:not([data-theme="night"]) .drawer-steps button.active small,
+  body:not([data-theme="night"]) .drawer-steps button.done small,
+  body:not([data-theme="night"]) .drawer-steps button.success small {
+    color: rgba(31,43,34,.8);
+  }
+
+  body:not([data-theme="night"]) .drawer-steps em {
+    color: #2e3b34;
+    font-weight: 900;
+  }
+
+  body:not([data-theme="night"]) .drawer-steps button.done em,
+  body:not([data-theme="night"]) .drawer-steps button.success em {
+    color: #1f7a5f;
+  }
+}
+
+body:not([data-theme="night"]) .episode-card {
+  color: #1d2a20;
+}
+
+body:not([data-theme="night"]) .episode-card > span {
+  color: #5d9434;
+}
+
+body:not([data-theme="night"]) .episode-card h2,
+body:not([data-theme="night"]) .episode-card b,
+body:not([data-theme="night"]) .branch-node strong {
+  color: #132018;
+}
+
+body:not([data-theme="night"]) .episode-card p {
+  color: rgba(31,43,34,.76);
+}
+
+body:not([data-theme="night"]) .branch-node small {
+  color: #4f8a2f;
+  font-weight: 860;
+}
+
+body:not([data-theme="night"]) .branch-node em {
+  color: rgba(31,43,34,.7);
+  font-weight: 760;
+}
+
+body:not([data-theme="night"]) .branch-node i {
+  color: rgba(31,43,34,.62);
+  font-weight: 720;
+}
+
+@media (max-width: 820px) {
+  body:not([data-theme="night"]) .episode-card p,
+  body:not([data-theme="night"]) .episode-card b,
+  body:not([data-theme="night"]) .branch-node strong,
+  body:not([data-theme="night"]) .branch-node em,
+  body:not([data-theme="night"]) .branch-node i {
+    text-shadow: 0 1px 0 rgba(255,255,255,.28);
+  }
+
+  body:not([data-theme="night"]) .episode-card p {
+    font-weight: 680;
+  }
+
+  body:not([data-theme="night"]) .episode-card b {
+    font-weight: 930;
+  }
+}
