@@ -12,6 +12,9 @@ const icons = {
   back: '<svg viewBox="0 0 24 24" fill="none"><path d="M15 18 9 12l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   share: '<svg viewBox="0 0 24 24" fill="none"><path d="M8 12h8M15 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 5v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
   home: '<svg viewBox="0 0 24 24" fill="none"><path d="m3 10.8 9-7 9 7V21h-6v-6H9v6H3V10.8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+  menu: '<svg viewBox="0 0 24 24" fill="none"><path d="M5 7h14M5 12h14M5 17h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+  sun: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2.2"/><path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1M18.7 18.7l-2.1-2.1M7.4 7.4 5.3 5.3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" fill="none"><path d="M18.5 15.7A7.7 7.7 0 0 1 8.3 5.5 7.8 7.8 0 1 0 18.5 15.7Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>',
 };
 
 const img = {
@@ -188,6 +191,7 @@ const state = {
   modal: null,
   selectedFilter: "全部",
   sortMode: "最新",
+  theme: localStorage.getItem("miko-theme") === "night" ? "night" : "day",
   selectedVisualStyle: "女帝朝堂",
   selectedLocalEdit: "第三集：早朝清算",
   pendingPlay: false,
@@ -376,10 +380,13 @@ function flowStepButton(id, label, index, variant = "side") {
 
 function flowDrawer() {
   return `
-    <button class="drawer-fab" data-action="toggle-drawer" aria-label="打开流程抽屉">${icon("folder")}</button>
     <div class="drawer-scrim ${state.modal === "drawer" ? "show" : ""}" data-action="close-modal"></div>
     <aside class="mobile-drawer ${state.modal === "drawer" ? "open" : ""}" aria-label="流程步骤状态">
       <div class="drawer-head">${icon("logo")}<strong>流程状态</strong><button data-action="close-modal" aria-label="关闭流程抽屉">×</button></div>
+      <button class="theme-toggle ${state.theme === "night" ? "is-night" : "is-day"}" data-action="toggle-theme" aria-label="切换白天夜间主题">
+        <span class="theme-choice moon-choice">${icon("moon")}</span>
+        <span class="theme-choice sun-choice">${icon("sun")}</span>
+      </button>
       <div class="drawer-progress">
         <span>当前进度</span>
         <strong>${flowProgress()}%</strong>
@@ -412,7 +419,10 @@ function shell(content, options = {}) {
       </aside>
       <main class="main">
         <header class="topbar">
-          <button class="mobile-logo drawer-toggle" data-action="toggle-drawer">${icon("logo")}</button>
+          <div class="topbar-left">
+            <button class="mobile-menu drawer-toggle" data-action="toggle-drawer" aria-label="打开流程抽屉">${icon("menu")}</button>
+            <button class="mobile-logo" data-go="home" aria-label="返回首页">${icon("logo")}</button>
+          </div>
           <span>互动沉浸式短剧平台 / ${pageTitle()}</span>
           <button class="autosave" data-action="autosave">自动保存</button>
         </header>
@@ -1093,8 +1103,15 @@ function render() {
     play: renderPlay,
     ending: renderEnding,
   };
+  const previousSideScroll = document.querySelector(".side")?.scrollTop ?? 0;
+  const previousDrawerScroll = document.querySelector(".drawer-steps")?.scrollTop ?? 0;
+  document.body.dataset.theme = state.theme;
   app.className = `motion-${state.motion}`;
   app.innerHTML = (map[state.screen] || renderHome)();
+  const side = document.querySelector(".side");
+  if (side) side.scrollTop = previousSideScroll;
+  const drawerSteps = document.querySelector(".drawer-steps");
+  if (drawerSteps) drawerSteps.scrollTop = previousDrawerScroll;
   const input = document.querySelector("#searchInput");
   if (input) {
     input.focus();
@@ -1176,6 +1193,11 @@ document.body.addEventListener("click", (event) => {
   }
   if (action === "toggle-drawer") {
     state.modal = state.modal === "drawer" ? null : "drawer";
+    render();
+  }
+  if (action === "toggle-theme") {
+    state.theme = state.theme === "night" ? "day" : "night";
+    localStorage.setItem("miko-theme", state.theme);
     render();
   }
   if (action === "open-search") {
